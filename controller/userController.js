@@ -22,14 +22,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
         return next(new AppError('This route is not for password updates. Please use /updateMyPassword.', 400));
     }
 
-    // 2.)Filtered out unwanted fields names that are not allowed to be updated
-
-    // Here we use findByIdAndUpdate() but before we do not use it because we are dealing sencetive data like password, So We should run all validators,middlewares which are helping to encrypted password. If we use findByIdAndUpdate() then all middlewares,validators does not work this function directly save data in database, password also will not be encrypted.But here we are not dealing with sencetive data so we can use it.
     const filterBody = filterObj(req.body,'name','email');
-    // This filterBody we are using because some fields have in database that user can not give or update like 'role'. What will be the role that candidate can not fix. Candidates have some options that he/she can update like name , email
-    
-
-    // 3.) Update user document.
     const updateUser = await User.findByIdAndUpdate(req.user.id, filterBody, { new: true, runValidators: true });
 
     res.status(200).json({
@@ -51,8 +44,6 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
     });
 })
 
-// This middleware helps If there is no id in params then it will take from protect and set in params.
-// This middleware we are using because In case get me We have to pass the the user id into getOne() feunction. But in case of getMe, id is coming from JWT then we are use this middleware.
 exports.getMe = (req, res, next) => {
     req.params.id = req.user.id;
     next();

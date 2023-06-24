@@ -96,8 +96,6 @@ exports.getMonthlyStats = catchAsync(async (req, res, next) => {
   });
 });
 
-// /tours-within/:distance/center/:latlng/unit/:unit
-// /tours-within/233/center/34.111745,-118.113491/unit/mi
 
 exports.getToursWithin = catchAsync(async (req, res, next) => {
   const { distance, latlng, unit } = req.params;
@@ -149,7 +147,7 @@ exports.getDistances = catchAsync(async (req, res, next) => {
       $geoNear:{
         near:{
           type: 'point',
-          coordinates: [lng * 1,lat * 1] // ! 1 multiply because to convert into number.
+          coordinates: [lng * 1,lat * 1] 
         },
         distanceField: 'distance',
         distanceMultiplier: multiplier

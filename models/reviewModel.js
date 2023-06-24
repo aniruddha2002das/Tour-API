@@ -33,7 +33,6 @@ const reviewSchema = new mongoose.Schema(
   }
 );
 
-// To prevent duplicate review.(One user can give review to only one tour.)
 reviewSchema.index({ tour:1,user:1 },{ unique: true });
 
 reviewSchema.pre(/^find/, function (next) {
@@ -76,12 +75,8 @@ reviewSchema.statics.calcAverageRatings = async function (tourId) {
 };
 
 reviewSchema.post("save", function (next) {
-  // this points current document
-  // Problem is Review variable is not defined to access it...
-  // here this is current document and the constructor is basically the model who created the document.
-  this.constructor.calcAverageRatings(this.tour); // tour is properties of Review model
+  this.constructor.calcAverageRatings(this.tour); 
 
-  // Here we do not call post middleware does not get access to next therefore we can not call next();
 });
 
 const Review = mongoose.model("Review", reviewSchema);
