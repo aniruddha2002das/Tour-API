@@ -6,7 +6,7 @@ const { protect, restrictTo } = require('../controller/authController');
 const reviewRouter = require('./reviewRouter');
 
 router.route('/top-5-tours').get(aliasTopTours, getAllTours);
-router.route('/').get(protect, getAllTours);
+router.route('/').get(getAllTours);
 router.route("/:id").get(protect, getTour).delete(protect, restrictTo('admin', 'lead-guide'), deleteTour).patch(protect, restrictTo('admin', 'lead-guide'), updateTour);
 router.route('/create-Tour').post(protect, restrictTo('admin', 'lead-guide'), createTour);
 router.route('/tourStatus').get(getTourStats);
