@@ -5,7 +5,7 @@ const data = require('./tour1.json');
 
 const start = async () => {
     try{
-        await connectDB(process.env.MONGODB_URLE);
+        await connectDB(process.env.MONGODB_URL);
         await Tour.deleteMany();
         await Tour.create(data);
         console.log("Data is successfully inserted into the database.");

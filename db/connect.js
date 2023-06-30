@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
+const dotenv = require("dotenv");
+dotenv.config();
 
 process.on('uncaughtException', err => {
     console.log('UNCAUGHT EXCEPTION! 💥 Shutting down...');
